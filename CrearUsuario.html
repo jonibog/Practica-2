@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Producto y Usuario</title>
+    <style>
+        .crear-boton {
+            background-color: #4CAF50; /* Color de fondo */
+            border: none;             /* Sin bordes */
+            color: white;             /* Color del texto */
+            padding: 15px 32px;       /* Relleno */
+            text-align: center;       /* Alineación del texto */
+            text-decoration: none;    /* Sin subrayado */
+            display: inline-block;    /* Mostrar en línea */
+            font-size: 16px;          /* Tamaño de fuente */
+            margin: 4px 2px;          /* Márgenes */
+            cursor: pointer;          /* Cursor tipo puntero */
+            border-radius: 12px;      /* Bordes redondeados */
+        }
+        .boton-editar, .boton-borrar {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .boton-editar {
+            background-color: #FFA500; /* Color de fondo de editar */
+        }
+        .boton-borrar {
+            background-color: #FF0000; /* Color de fondo de borrar */
+        }
+    </style>
+    <script>
+        function mostrarFormularioProducto() {
+            document.getElementById('formulario-producto-container').innerHTML = `
+                <h2>Formulario de Producto</h2>
+                <form id="producto-form">
+                    <label for="nombre">Nombre del Producto:</label><br>
+                    <input type="text" id="nombre" name="nombre" required><br><br>
+                    <label for="cantidad">Cantidad:</label><br>
+                    <input type="number" id="cantidad" name="cantidad" required><br><br>
+                    <label for="proveedor">Nombre del Proveedor:</label><br>
+                    <input type="text" id="proveedor" name="proveedor" required><br><br>
+                    <input type="submit" value="Enviar">
+                </form>
+            `;
+
+            document.getElementById('producto-form').onsubmit = function(event) {
+                event.preventDefault();
+                agregarProductoALista();
+            };
+        }
+
+        function agregarProductoALista() {
+            const nombre = document.getElementById('nombre').value;
+            const cantidad = document.getElementById('cantidad').value;
+            const proveedor = document.getElementById('proveedor').value;
+
+            const lista = document.getElementById('lista-productos');
+            const nuevoElemento = document.createElement('li');
+            nuevoElemento.innerHTML = `Producto: ${nombre}, Cantidad: ${cantidad}, Proveedor: ${proveedor}
+                <button class="boton-editar" onclick="editarProducto(this)">Editar</button>
+                <button class="boton-borrar" onclick="borrarElemento(this)">Borrar</button>`;
+            lista.appendChild(nuevoElemento);
+
+            document.getElementById('producto-form').reset(); // Resetea el formulario
+        }
+
+        function editarProducto(button) {
+            const li = button.parentElement;
+            const text = li.firstChild.textContent;
+            const parts = text.match(/Producto: (.*), Cantidad: (.*), Proveedor: (.*)/);
+            if (parts) {
+                const nombre = parts[1].trim();
+                const cantidad = parts[2].trim();
+                const proveedor = parts[3].trim();
+
+                document.getElementById('nombre').value = nombre;
+                document.getElementById('cantidad').value = cantidad;
+                document.getElementById('proveedor').value = proveedor;
+
+                li.remove(); // Eliminar el elemento de la lista
+            }
+        }
+    </script>
+</head>
+<body>
+  <button class="crear-boton" onclick="mostrarFormularioProducto()">Crear Producto</button>
+  <div id="formulario-producto-container"></div>
+  <h2>Lista de Productos</h2>
+  <ul id="lista-productos"></ul>
+
+</body>
+</html>

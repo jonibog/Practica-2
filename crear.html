@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botones Crear</title>
+    <style>
+        .crear-boton {
+            background-color: #4CAF50; /* Color de fondo */
+            border: none;             /* Sin bordes */
+            color: white;             /* Color del texto */
+            padding: 15px 32px;       /* Relleno */
+            text-align: center;       /* Alineación del texto */
+            text-decoration: none;    /* Sin subrayado */
+            display: inline-block;    /* Mostrar en línea */
+            font-size: 16px;          /* Tamaño de fuente */
+            margin: 4px 2px;          /* Márgenes */
+            cursor: pointer;          /* Cursor tipo puntero */
+            border-radius: 12px;      /* Bordes redondeados */
+        }
+        .boton-editar, .boton-borrar {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .boton-editar {
+            background-color: #FFA500; /* Color de fondo de editar */
+        }
+        .boton-borrar {
+            background-color: #FF0000; /* Color de fondo de borrar */
+        }
+    </style>
+    <script>
+        function mostrarFormularioProducto() {
+            document.getElementById('formulario-producto-container').innerHTML = `
+                <h2>Formulario de Producto</h2>
+                <form id="producto-form">
+                    <label for="nombre">Nombre del Producto:</label><br>
+                    <input type="text" id="nombre" name="nombre" required><br><br>
+                    <label for="cantidad">Cantidad:</label><br>
+                    <input type="number" id="cantidad" name="cantidad" required><br><br>
+                    <label for="proveedor">Nombre del Proveedor:</label><br>
+                    <input type="text" id="proveedor" name="proveedor" required><br><br>
+                    <input type="submit" value="Enviar">
+                </form>
+            `;
+
+            document.getElementById('producto-form').onsubmit = function(event) {
+                event.preventDefault();
+                agregarProductoALista();
+            };
+        }
+
+        function agregarProductoALista() {
+            const nombre = document.getElementById('nombre').value;
+            const cantidad = document.getElementById('cantidad').value;
+            const proveedor = document.getElementById('proveedor').value;
+
+            const lista = document.getElementById('lista-productos');
+            const nuevoElemento = document.createElement('li');
+            nuevoElemento.innerHTML = `Producto: ${nombre}, Cantidad: ${cantidad}, Proveedor: ${proveedor}
+                <button class="boton-editar" onclick="editarProducto(this)">Editar</button>
+                <button class="boton-borrar" onclick="borrarElemento(this)">Borrar</button>`;
+            lista.appendChild(nuevoElemento);
+
+            document.getElementById('producto-form').reset(); // Resetea el formulario
+        }
+
+        function editarProducto(button) {
+            const li = button.parentElement;
+            const text = li.firstChild.textContent;
+            const parts = text.match(/Producto: (.*), Cantidad: (.*), Proveedor: (.*)/);
+            if (parts) {
+                const nombre = parts[1].trim();
+                const cantidad = parts[2].trim();
+                const proveedor = parts[3].trim();
+
+                document.getElementById('nombre').value = nombre;
+                document.getElementById('cantidad').value = cantidad;
+                document.getElementById('proveedor').value = proveedor;
+
+                li.remove(); // Eliminar el elemento de la lista
+            }
+        }
+
+        function mostrarFormularioUsuario() {
+            document.getElementById('formulario-usuario-container').innerHTML = `
+                <h2>Formulario de Usuario</h2>
+                <form id="usuario-form">
+                    <label for="username">Nombre de Usuario:</label><br>
+                    <input type="text" id="username" name="username" required><br><br>
+                    <label for="dni">DNI:</label><br>
+                    <input type="text" id="dni" name="dni" required><br><br>
+                    <label for="direccion">Dirección:</label><br>
+                    <input type="text" id="direccion" name="direccion" required><br><br>
+                    <label for="password">Contraseña:</label><br>
+                    <input type="password" id="password" name="password" required><br><br>
+                    <input type="submit" value="Enviar">
+                </form>
+            `;
+
+            document.getElementById('usuario-form').onsubmit = function(event) {
+                event.preventDefault();
+                agregarUsuarioALista();
+            };
+        }
+
+        function agregarUsuarioALista() {
+            const username = document.getElementById('username').value;
+            const dni = document.getElementById('dni').value;
+            const direccion = document.getElementById('direccion').value;
+
+            const lista = document.getElementById('lista-usuarios');
+            const nuevoElemento = document.createElement('li');
+            nuevoElemento.innerHTML = `Usuario: ${username}, DNI: ${dni}, Dirección: ${direccion}
+                <button class="boton-editar" onclick="editarUsuario(this)">Editar</button>
+                <button class="boton-borrar" onclick="borrarElemento(this)">Borrar</button>`;
+            lista.appendChild(nuevoElemento);
+
+            document.getElementById('usuario-form').reset(); // Resetea el formulario
+        }
+
+        function editarUsuario(button) {
+            const li = button.parentElement;
+            const text = li.firstChild.textContent;
+            const parts = text.match(/Usuario: (.*), DNI: (.*), Dirección: (.*)/);
+            if (parts) {
+                const username = parts[1].trim();
+                const dni = parts[2].trim();
+                const direccion = parts[3].trim();
+
+                document.getElementById('username').value = username;
+                document.getElementById('dni').value = dni;
+                document.getElementById('direccion').value = direccion;
+
+                li.remove(); // Eliminar el elemento de la lista
+            }
+        }
+
+        function borrarElemento(button) {
+            const li = button.parentElement;
+            li.remove();
+        }
+    </script>
+</head>
+<body>
+<button class="crear-boton" onclick="mostrarFormularioProducto()">Crear Producto</button>
+<div id="formulario-producto-container"></div>
+<h2>Lista de Productos</h2>
+<ul id="lista-productos"></ul>
+
+<button class="crear-boton" onclick="mostrarFormularioUsuario()">Crear Usuario</button>
+<div id="formulario-usuario-container"></div>
+<h2>Lista de Usuarios</h2>
+<ul id="lista-usuarios"></ul>
+</body>
+</html>

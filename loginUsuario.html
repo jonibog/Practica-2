@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Usuario</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function validarFormulario() {
+            // Obtener los valores de los campos
+            const nombre = document.getElementById('nombre').value;
+            const contraseña = document.getElementById('contraseña').value;
+            
+            // Validar los campos
+            let valido = true;
+
+            if (nombre === "") {
+                document.getElementById('nombreError').textContent = "El nombre es requerido";
+                valido = false;
+            } else {
+                document.getElementById('nombreError').textContent = "";
+            }
+
+            if (contraseña === "") {
+                document.getElementById('contraseñaError').textContent = "La contraseña es requerida";
+                valido = false;
+            } else {
+                document.getElementById('contraseñaError').textContent = "";
+            }
+
+            // Si es válido, redirigir a la página de creación de productos
+            if (valido) {
+                window.location.href = "crearProducto.html";
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="interna">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre">
+        <div id="nombreError" class="error"></div>
+    </div>
+    <div class="interna">
+        <label for="contraseña">Contraseña</label>
+        <input type="password" id="contraseña">
+        <div id="contraseñaError" class="error"></div>
+    </div>
+    <div class="botones interna">
+        <button onclick="validarFormulario()">Ingresar</button>
+    </div>
+</div>
+</body>
+</html>
