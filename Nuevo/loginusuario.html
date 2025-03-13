@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Login Usuario</title>
+    <script>
+        function validarLoginuser() {
+            const nombre = document.getElementById('nombreuserLogin').value;
+            const contrasena = document.getElementById('contrasenauserLogin').value;
+
+            fetch('http://localhost:8080/api/usuarios')
+                .then(response => response.json())
+                .then(data => {
+                    const userValido = data.find(user => user.nombre === nombre && user.contraseña === contrasena);
+
+                    if (userValido) {
+                        alert("Inicio de sesión exitoso.");
+                        window.location.href = "crearproducto.html"; // Redirige a crearproducto.html
+                    } else {
+                        alert("Usuario o contraseña incorrectos.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function irRegistro() {
+            window.location.href = "registrouser.html";
+        }
+    </script>
+</head>
+<body>
+    <h1>Login de Usuario</h1>
+    <label for="nombreuserLogin">Nombre:</label>
+    <input type="text" id="nombreuserLogin">
+    <br>
+
+    <label for="contrasenauserLogin">Contraseña:</label>
+    <input type="password" id="contrasenauserLogin">
+    <br>
+
+    <button onclick="validarLoginuser()">Iniciar Sesión</button>
+    <button onclick="irRegistro()">Ir a Registro</button>
+</body>
+</html>

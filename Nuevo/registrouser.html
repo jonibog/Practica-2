@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Registro Usuario</title>
+    <script>
+        function registrarUser() {
+            const nombre = document.getElementById('nombreUser').value;
+            const contrasena = document.getElementById('contrasenaUser').value;
+
+            if (!nombre || !contrasena) {
+                alert("Por favor, completa todos los campos.");
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.find(user => user.nombre === nombre)) {
+                alert("El usuario ya está registrado.");
+                return;
+            }
+
+            users.push({ nombre, contrasena });
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert("Usuario registrado exitosamente.");
+
+            // Redirigir a la página de creación de producto
+            window.location.href = "./crearproducto.html";
+        }
+
+        function irLogin() {
+            // Redirigir a la página de login
+            window.location.href = "./loginusuario.html"; 
+        }
+    </script>
+</head>
+<body>
+    <h1>Registro de Usuario</h1>
+    <label for="nombreUser">Nombre:</label>
+    <input type="text" id="nombreUser">
+    <br>
+
+    <label for="contrasenaUser">Contraseña:</label>
+    <input type="password" id="contrasenaUser">
+    <br>
+
+    <button onclick="registrarUser()">Registrar Usuario</button>
+    <button onclick="irLogin()">Ir a Login</button>
+</body>
+</html>

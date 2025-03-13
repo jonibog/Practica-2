@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Productos</title>
+</head>
+<body>
+    <h1>Productos</h1>
+    <ul id="lista-productos"></ul>
+
+    <script>
+        async function obtenerProductos() {
+            try {
+                const response = await fetch("http://localhost:8080/productos");
+                const productos = await response.json();
+
+                const lista = document.getElementById("lista-productos");
+                lista.innerHTML = ""; // Limpiar lista
+
+                productos.forEach(producto => {
+                    const item = document.createElement("li");
+                    item.innerText = `${producto.nombre} - Stock: ${producto.stock} - Precio: $${producto.precio}`;
+                    lista.appendChild(item);
+                });
+            } catch (error) {
+                console.error("Error al obtener productos:", error);
+            }
+        }
+
+        obtenerProductos();
+    </script>
+</body>
+</html>
