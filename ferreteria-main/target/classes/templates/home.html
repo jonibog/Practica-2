@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BIENVENIDO</title>
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+    <!-- CSS Embebido -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        #page-wrapper {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        #header {
+            background-color: #FF4500;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #header h1 a {
+            color: white;
+            font-size: 28px;
+        }
+
+        #nav ul {
+            list-style: none;
+        }
+
+        .menuToggle {
+            background-color: white;
+            color: #FF4500;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .menuToggle:hover {
+            background-color: #eee;
+        }
+
+        #menu {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-top: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            display: none; /* Oculto por defecto */
+            position: absolute;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .special:hover #menu {
+            display: block;
+        }
+
+        #menu ul {
+            list-style: none;
+            padding: 10px;
+        }
+
+        #menu ul li {
+            padding: 8px 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        #menu ul li:last-child {
+            border-bottom: none;
+        }
+
+        #menu ul li a {
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        #menu ul li a:hover {
+            color: #FF4500;
+        }
+
+        /* Tabla */
+        article#main {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        article#main h2 {
+            margin-bottom: 20px;
+            color: #FF4500;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #FF4500;
+            color: white;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* Nuevo Producto */
+        details {
+            background-color: #fafafa;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+        }
+
+        details summary {
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        form#formNuevoProd {
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+
+        form#formNuevoProd label {
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        form#formNuevoProd input[type="text"],
+        form#formNuevoProd input[type="number"] {
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        form#formNuevoProd input[type="text"]:focus,
+        form#formNuevoProd input[type="number"]:focus {
+            border-color: #FF4500;
+            outline: none;
+        }
+
+        form#formNuevoProd input[type="button"] {
+            background-color: #FF4500;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        form#formNuevoProd input[type="button"]:hover {
+            background-color: #e63a00;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            #header h1 {
+                margin-bottom: 10px;
+            }
+
+            article#main {
+                padding: 20px;
+            }
+
+            form#formNuevoProd input[type="button"] {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body class="is-preload">
+<!-- Page Wrapper -->
+<div id="page-wrapper">
+    <!-- Header -->
+    <header id="header">
+        <h1><a href="home">La Nueva Ferretería</a></h1>
+        <nav id="nav">
+            <ul>
+                <li class="special">
+                    <a href="#menu" class="menuToggle"><span>Menú</span></a>
+                    <div id="menu">
+                        <ul>
+                            <!-- Iterar sobre los roles y permisos -->
+                            <li th:each="entry : ${rolesPermisos}" th:if="${entry.key != 'Usuario'}">
+                                <span th:text="${entry.key}">Rol</span>
+                                <ul>
+                                    <!-- Iterar sobre los permisos dentro de cada rol -->
+                                    <li th:each="permiso : ${entry.value}">
+                                        <a th:href="@{/acciones/{permiso}(permiso=${permiso})}" th:text="${permiso}"></a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a th:href="@{/logout}" th:text="Salir">Salir</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <article id="main">
+        <section>
+            <h2>Productos</h2>
+            <table id="tDatos">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Guardar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Aquí se cargan dinámicamente los productos -->
+                </tbody>
+            </table>
+
+            <details>
+                <summary>Nuevo Producto</summary>
+                <form id="formNuevoProd">
+                    <label for="txtNomNuevProd">Nombre:</label>
+                    <input type="text" id="txtNomNuevProd" placeholder="Tornillo" required>
+
+                    <label for="txtPrecio">Precio:</label>
+                    <input type="number" id="txtPrecio" name="precio" placeholder="1500" min="0" required>
+
+                    <label for="txtCantidad">Cantidad:</label>
+                    <input type="number" id="txtCantidad" name="cantidad" placeholder="1" min="0" required>
+
+                    <input type="button" value="Guardar" onclick="nuevoProducto()">
+                </form>
+            </details>
+        </section>
+    </article>
+</div>
+
+<!-- Scripts -->
+<script src="/js/productojs.js"></script>
+
+</body>
+</html>

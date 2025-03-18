@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title th:text="|Registro de ${tipo}|">Registro de Usuario</title>
+
+    <!-- CSS Embebido -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f0f2f5;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #page-wrapper {
+            width: 100%;
+            max-width: 500px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px 30px;
+        }
+
+        #header h1 a {
+            text-decoration: none;
+            color: #FF4500;
+            font-size: 28px;
+        }
+
+        article#main header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        article#main header h3 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        article#main header p {
+            color: #777;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="password"] {
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        form input[type="text"]:focus,
+        form input[type="email"]:focus,
+        form input[type="password"]:focus {
+            border-color: #FF4500;
+            outline: none;
+        }
+
+        form input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        form input[type="button"] {
+            background-color: #FF4500;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        form input[type="button"]:hover {
+            background-color: #e63a00;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            #page-wrapper {
+                padding: 30px 20px;
+            }
+
+            #header h1 a {
+                font-size: 24px;
+            }
+
+            article#main header h3 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div id="page-wrapper">
+    <!-- Header -->
+    <header id="header" style="text-align: center; margin-bottom: 20px;">
+        <h1><a href="login">La Nueva Ferretería</a></h1>
+    </header>
+
+    <!-- Main -->
+    <article id="main">
+        <header>
+            <h3 th:text="|Bienvenido al Registro de ${tipo}|">Bienvenido al Registro de Usuario</h3>
+            <p>Ingrese los datos solicitados:</p>
+        </header>
+        <section>
+            <form>
+                <label for="txtNomUs">Ingrese Nombre:</label>
+                <input type="text" id="txtNomUs" placeholder="Juanito" required>
+
+                <label for="txtApeUs">Ingrese Apellido:</label>
+                <input type="text" id="txtApeUs" placeholder="Lopez" required>
+
+                <label for="txtemailUs">Ingrese Email:</label>
+                <input type="email" id="txtemailUs" placeholder="email@email.com" required>
+
+                <label for="txtPswUs">Ingrese Password:</label>
+                <input type="password" id="txtPswUs" required>
+
+                <div style="margin-bottom: 20px;">
+                    <input type="checkbox" id="checkbox" name="rolAdmin">
+                    <label for="checkbox" style="display: inline; font-weight: normal;">Usuario Rol Administrador</label>
+                </div>
+
+                <input type="button" value="Nuevo Usuario">
+            </form>
+        </section>
+    </article>
+</div>
+</body>
+</html>

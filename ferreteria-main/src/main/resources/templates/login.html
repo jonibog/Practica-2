@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ingrese</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="icon" href="img/logo_cimbad.ico" type="image/x-icon">
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+    <!-- CSS embebido directamente -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1, h2 {
+            color: #2F4F4F;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 12px 30px;
+            margin: 5px 0;
+            border-radius: 25px;
+            background-color: #FF4500;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #e63a00;
+        }
+
+        hr {
+            margin: 20px 0;
+        }
+
+        .inner {
+            max-width: 400px;
+            width: 100%;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .actions {
+            text-align: center;
+        }
+
+        .button.primary {
+            background-color: #FF4500;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .button.primary:hover {
+            background-color: #e63a00;
+        }
+
+        #header {
+            display: none; /* Ocultamos el header ya que solo queremos el formulario */
+        }
+    </style>
+</head>
+
+<body class="is-preload">
+
+<div class="inner">
+    <header style="text-align: center;">
+        <h2>Iniciar sesión</h2>
+    </header>
+
+    <section>
+        <form th:action="@{/login}" method="post" class="login" th:object="${persona}">
+            <div>
+                <input type="email" placeholder="Email" id="email" name="email" required>
+            </div>
+            <div>
+                <input type="password" placeholder="Password" id="psw" name="psw" required>
+            </div>
+
+            <!-- Mostrar mensaje específico de error -->
+            <div th:if="${error}" style="color: red;">
+                <p th:text="${error}"></p>
+            </div>
+            <p th:if="${error == 'usuarioNoRegistrado'}">Usuario no registrado. Regístrese.</p>
+            <p th:if="${error == 'credencialesInvalidas'}">Revise sus credenciales.</p>
+            <p th:if="${error == 'errorDesconocido'}">Usuario o contraseña incorrectos. Inténtalo de nuevo.</p>
+
+            <div class="actions">
+                <button type="submit">Ingresar</button>
+            </div>
+        </form>
+
+        <div class="actions">
+            <button onclick="recuperaremail()">Recuperar Contraseña</button>
+        </div>
+    </section>
+</div>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.scrollex.min.js"></script>
+<script src="assets/js/jquery.scrolly.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="/js/recuperaremail.js"></script>
+
+</body>
+</html>
